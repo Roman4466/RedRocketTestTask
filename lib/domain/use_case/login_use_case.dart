@@ -15,17 +15,14 @@ class LoginUseCase {
   const LoginUseCase(this._authApi, this._secureStorage);
 
   Future<Either<AppError, User>> call(String email, String password) async {
-    // Input validation
     final validationError = _validateInput(email, password);
     if (validationError != null) {
       return Left(validationError);
     }
 
-    // Call API
     final apiResult = await _authApi.login(email, password);
 
     return apiResult.fold((error) => Left(error), (response) async {
-      // Save tokens
       final tokenResult = await _secureStorage.saveToken(response.token);
       if (tokenResult.isLeft()) {
         return tokenResult.fold((error) => Left(error), (_) => throw Exception('Unreachable'));
@@ -39,7 +36,6 @@ class LoginUseCase {
         );
       }
 
-      // Return user
       return Right(
         User(id: response.user.id, email: response.user.email, name: response.user.name),
       );

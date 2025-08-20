@@ -43,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.fold((error) => emit(AuthError(error: error, lastAction: event)), (user) {
       emit(AuthAuthenticated(user: user));
-      _lastAction = null; // Clear on success
+      _lastAction = null;
     });
   }
 
@@ -55,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.fold((error) => emit(AuthError(error: error, lastAction: event)), (_) {
       emit(const AuthUnauthenticated());
-      _lastAction = null; // Clear on success
+      _lastAction = null;
     });
   }
 

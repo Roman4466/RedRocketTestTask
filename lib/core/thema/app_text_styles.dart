@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app_colors.dart';
 
 class AppTextStyles {
-  // Headings
   static TextStyle get h1 =>
       TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold, color: AppColors.textPrimary);
 
@@ -23,7 +22,6 @@ class AppTextStyles {
   static TextStyle get h6 =>
       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textPrimary);
 
-  // Body Text
   static TextStyle get bodyLarge =>
       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.normal, color: AppColors.textPrimary);
 
@@ -33,14 +31,12 @@ class AppTextStyles {
   static TextStyle get bodySmall =>
       TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal, color: AppColors.textSecondary);
 
-  // Button Text
   static TextStyle get buttonLarge =>
       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600, color: AppColors.textOnPrimary);
 
   static TextStyle get buttonMedium =>
       TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600, color: AppColors.textOnPrimary);
 
-  // Specialized Text Styles
   static TextStyle get splashTitle =>
       TextStyle(fontSize: 32.sp, fontWeight: FontWeight.bold, color: AppColors.textOnPrimary);
 
@@ -64,18 +60,6 @@ class AppTextStyles {
 
   static TextStyle get cardSubtitle =>
       TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal, color: AppColors.textSecondary);
-
-  static TextStyle get testCredentialsTitle => TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w600,
-    color: AppColors.testCredentialsTitle,
-  );
-
-  static TextStyle get testCredentialsBody => TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeight.normal,
-    color: AppColors.testCredentialsText,
-  );
 
   static TextStyle get welcomeBackStyle =>
       TextStyle(fontSize: 16.sp, fontWeight: FontWeight.normal, color: AppColors.textOnSecondary);

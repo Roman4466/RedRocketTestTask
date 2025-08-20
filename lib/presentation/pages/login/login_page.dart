@@ -112,8 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                           showErrors: (control) => control.invalid && control.touched,
                         ),
                         SizedBox(height: 24.h),
-
-                        // Login button
                         BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
                             final isLoading = state is AuthLoading;
@@ -137,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                                     padding: EdgeInsets.symmetric(vertical: 16.h),
                                     decoration: BoxDecoration(
                                       color: isLoading || !isFormValid
-                                          ? AppColors.primary.withOpacity(0.6)
+                                          ? AppColors.primary.withValues(alpha: 0.6)
                                           : AppColors.primary,
                                       borderRadius: BorderRadius.circular(12.r),
                                     ),

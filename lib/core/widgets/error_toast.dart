@@ -1,4 +1,3 @@
-// lib/presentation/widgets/error_toast.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,7 +24,6 @@ class ErrorToast {
 
     overlay.insert(overlayEntry);
 
-    // Auto dismiss after duration
     Future.delayed(duration, () {
       if (overlayEntry.mounted) {
         overlayEntry.remove();

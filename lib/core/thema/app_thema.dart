@@ -1,4 +1,3 @@
-// lib/core/theme/app_theme.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,7 +17,6 @@ class AppTheme {
         error: AppColors.error,
       ),
 
-      // App Bar Theme
       appBarTheme: AppBarTheme(
         centerTitle: true,
         elevation: 0,
@@ -27,7 +25,6 @@ class AppTheme {
         titleTextStyle: AppTextStyles.h6.copyWith(color: AppColors.textOnPrimary),
       ),
 
-      // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -39,7 +36,6 @@ class AppTheme {
         ),
       ),
 
-      // Outlined Button Theme
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.error,

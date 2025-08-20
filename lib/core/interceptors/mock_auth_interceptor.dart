@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 class MockAuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // Mock login endpoint
     if (options.path.contains('/auth/login')) {
       final requestData = options.data as Map<String, dynamic>?;
       final email = requestData?['email'] ?? 'test@example.com';
