@@ -116,25 +116,12 @@ class _ErrorToastWidgetState extends State<_ErrorToastWidget> with SingleTickerP
                       ),
                       SizedBox(width: 12.w),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              ErrorLocalizer.getLocalizedMessage(context, widget.error),
-                              style: AppTextStyles.h6.copyWith(
-                                color: _getTextColor(),
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                            SizedBox(height: 2.h),
-                            Text(
-                              localizedMessage,
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: _getTextColor().withValues(alpha: 0.8),
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          localizedMessage,
+                          style: AppTextStyles.h6.copyWith(
+                            color: _getTextColor(),
+                            fontSize: 14.sp,
+                          ),
                         ),
                       ),
                       GestureDetector(

@@ -161,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                       if (value == null || value.isEmpty) {
                         return l10n.passwordRequired;
                       }
-                      if (_isValidPassword(value)) {
+                      if (!_isValidPassword(value)) {
                         return l10n.passwordMinLength;
                       }
                       return null;
