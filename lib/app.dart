@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'di/injection_module.dart';
 import 'presentation/bloc/auth_bloc.dart';
 import 'router.dart';
+import 'l10n/arb/app_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -21,6 +22,8 @@ class App extends StatelessWidget {
           child: MaterialApp.router(
             title: 'Red Rocket Test Task',
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: ThemeData(
               primarySwatch: Colors.deepPurple,
               visualDensity: VisualDensity.adaptivePlatformDensity,

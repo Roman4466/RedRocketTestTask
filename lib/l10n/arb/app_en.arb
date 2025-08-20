@@ -1,3 +1,41 @@
 {
-  "@@locale": "en"
+  "@@locale": "en",
+  "redRocket": "Red Rocket",
+  "testTask": "Test Task",
+  "welcomeBack": "Welcome Back",
+  "signInToAccount": "Sign in to your account",
+  "email": "Email",
+  "password": "Password",
+  "signIn": "Sign In",
+  "testCredentials": "Test Credentials",
+  "testCredentialsText": "Email: test@example.com\nPassword: password123",
+  "emailRequired": "Email is required",
+  "invalidEmailFormat": "Invalid email format",
+  "passwordRequired": "Password is required",
+  "passwordMinLength": "Password must be at least 6 characters",
+  "home": "Home",
+  "logout": "Logout",
+  "welcomeBackComma": "Welcome back,",
+  "quickActions": "Quick Actions",
+  "profile": "Profile",
+  "viewProfile": "View profile",
+  "settings": "Settings",
+  "appSettings": "App settings",
+  "analytics": "Analytics",
+  "viewStats": "View stats",
+  "help": "Help",
+  "getSupport": "Get support",
+  "logoutConfirmTitle": "Logout",
+  "logoutConfirmMessage": "Are you sure you want to logout?",
+  "cancel": "Cancel",
+  "ok": "OK",
+  "somethingWentWrong": "Something went wrong",
+  "featureComingSoon": "{feature} feature coming soon!",
+  "@featureComingSoon": {
+    "placeholders": {
+      "feature": {
+        "type": "String"
+      }
+    }
+  }
 }
