@@ -28,22 +28,22 @@ Built as a technical demonstration for Red Rocket's Flutter developer assessment
     fvm use
    ```
 
-3**Install dependencies**
+3. **Install dependencies**
    ```bash
    fvm flutter pub get
    ```
 
-4**Generate code**
+4. **Generate code**
    ```bash
    fvm dart run build_runner watch --delete-conflicting-outputs
    ```
 
-5**Generate localizations**
+5. **Generate localizations**
    ```bash
    fvm flutter gen-l10n
    ```
 
-6**Run the app**
+6. **Run the app**
    ```bash
    fvm flutter run
    ```
