@@ -22,6 +22,10 @@ import '../data/api/auth_api.dart' as _i17;
 import '../data/api/auth_api_client.dart' as _i410;
 import '../data/storage/secure_storage.dart' as _i579;
 import '../data/storage/secure_storage_service.dart' as _i182;
+import '../domain/use_case/check_auth_status_use_case.dart' as _i884;
+import '../domain/use_case/get_current_user_use_case.dart' as _i432;
+import '../domain/use_case/login_use_case.dart' as _i772;
+import '../domain/use_case/logout_use_case.dart' as _i235;
 import 'injection_module.dart' as _i212;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -47,6 +51,18 @@ extension GetItInjectableX on _i174.GetIt {
     >((logger, _) => _i1072.HttpLoggerInterceptor(logger: logger));
     gh.factory<_i579.SecureStorage>(
       () => _i182.SecureStorageService(gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.factory<_i884.CheckAuthStatusUseCase>(
+      () => _i884.CheckAuthStatusUseCase(gh<_i579.SecureStorage>()),
+    );
+    gh.factory<_i432.GetCurrentUserUseCase>(
+      () => _i432.GetCurrentUserUseCase(gh<_i579.SecureStorage>()),
+    );
+    gh.factory<_i772.LoginUseCase>(
+      () => _i772.LoginUseCase(gh<_i17.AuthApi>(), gh<_i579.SecureStorage>()),
+    );
+    gh.factory<_i235.LogoutUseCase>(
+      () => _i235.LogoutUseCase(gh<_i17.AuthApi>(), gh<_i579.SecureStorage>()),
     );
     return this;
   }
