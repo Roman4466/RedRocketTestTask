@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
-
+import '../../core/error/app_error.dart';
+import '../../core/error/error_codes.dart';
 import 'secure_storage.dart';
 
 @Injectable(as: SecureStorage)
@@ -13,57 +15,87 @@ class SecureStorageService implements SecureStorage {
   const SecureStorageService(this._storage);
 
   @override
-  Future<void> saveToken(String token) async {
+  Future<Either<AppError, Unit>> saveToken(String token) async {
     try {
       await _storage.write(key: _tokenKey, value: token);
+      return const Right(unit);
     } catch (e) {
-      throw Exception('Failed to save token: ${e.toString()}');
+      return Left(AppError(
+        code: AppErrorCode.tokenSaveError,
+        originalError: e,
+        isRetryable: false,
+      ));
     }
   }
 
   @override
-  Future<void> saveRefreshToken(String refreshToken) async {
+  Future<Either<AppError, Unit>> saveRefreshToken(String refreshToken) async {
     try {
       await _storage.write(key: _refreshTokenKey, value: refreshToken);
+      return const Right(unit);
     } catch (e) {
-      throw Exception('Failed to save refresh token: ${e.toString()}');
+      return Left(AppError(
+        code: AppErrorCode.tokenSaveError,
+        originalError: e,
+        isRetryable: false,
+      ));
     }
   }
 
   @override
-  Future<String?> getToken() async {
+  Future<Either<AppError, String?>> getToken() async {
     try {
-      return await _storage.read(key: _tokenKey);
+      final token = await _storage.read(key: _tokenKey);
+      return Right(token);
     } catch (e) {
-      return null;
+      return Left(AppError(
+        code: AppErrorCode.storageError,
+        originalError: e,
+        isRetryable: true,
+      ));
     }
   }
 
   @override
-  Future<String?> getRefreshToken() async {
+  Future<Either<AppError, String?>> getRefreshToken() async {
     try {
-      return await _storage.read(key: _refreshTokenKey);
+      final token = await _storage.read(key: _refreshTokenKey);
+      return Right(token);
     } catch (e) {
-      return null;
+      return Left(AppError(
+        code: AppErrorCode.storageError,
+        originalError: e,
+        isRetryable: true,
+      ));
     }
   }
 
   @override
-  Future<void> clearTokens() async {
+  Future<Either<AppError, Unit>> clearTokens() async {
     try {
       await _storage.delete(key: _tokenKey);
       await _storage.delete(key: _refreshTokenKey);
+      return const Right(unit);
     } catch (e) {
-      print('Error clearing tokens: ${e.toString()}');
+      return Left(AppError(
+        code: AppErrorCode.storageError,
+        originalError: e,
+        isRetryable: true,
+      ));
     }
   }
 
   @override
-  Future<void> clearAllData() async {
+  Future<Either<AppError, Unit>> clearAllData() async {
     try {
       await _storage.deleteAll();
+      return const Right(unit);
     } catch (e) {
-      print('Error clearing all storage data: ${e.toString()}');
+      return Left(AppError(
+        code: AppErrorCode.storageError,
+        originalError: e,
+        isRetryable: true,
+      ));
     }
   }
 }

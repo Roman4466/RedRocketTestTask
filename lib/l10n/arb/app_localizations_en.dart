@@ -162,7 +162,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get retry => 'Retry';
 
   @override
-  String get retryConnection => 'Check Connection';
+  String get retryConnection => 'Retry';
 
   @override
   String get retryRequest => 'Try Again';

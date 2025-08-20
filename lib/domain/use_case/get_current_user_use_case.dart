@@ -1,6 +1,9 @@
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import '../entities/user.dart';
+
+import '../../core/error/app_error.dart';
 import '../../data/storage/secure_storage.dart';
+import '../entities/user.dart';
 
 @injectable
 class GetCurrentUserUseCase {
@@ -8,17 +11,15 @@ class GetCurrentUserUseCase {
 
   const GetCurrentUserUseCase(this._secureStorage);
 
-  Future<User?> call() async {
-    try {
-      final token = await _secureStorage.getToken();
-      if (token == null || token.isEmpty) return null;
-      return const User(
-        id: 1,
-        email: 'user@example.com',
-        name: 'Current User',
-      );
-    } catch (e) {
-      return null;
-    }
+  Future<Either<AppError, User?>> call() async {
+    final tokenResult = await _secureStorage.getToken();
+
+    return tokenResult.fold((error) => Left(error), (token) {
+      if (token == null || token.isEmpty) {
+        return const Right(null);
+      }
+
+      return const Right(User(id: 1, email: 'user@example.com', name: 'Current User'));
+    });
   }
 }

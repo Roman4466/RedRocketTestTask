@@ -12,11 +12,18 @@ class AuthTokenInterceptor extends Interceptor {
 
     try {
       final secureStorage = getIt<SecureStorage>();
-      final token = await secureStorage.getToken();
+      final tokenResult = await secureStorage.getToken();
 
-      if (token != null && token.isNotEmpty) {
-        options.headers['Authorization'] = 'Bearer $token';
-      }
+      tokenResult.fold(
+        (error) {
+          print('Error getting auth token: ${error}');
+        },
+        (token) {
+          if (token != null && token.isNotEmpty) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+        },
+      );
     } catch (e) {
       print('Error adding auth token: $e');
     }

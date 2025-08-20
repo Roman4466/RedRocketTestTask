@@ -1,5 +1,10 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../core/error/app_error.dart';
+import '../../core/error/error_codes.dart';
+import '../../core/error/error_mapper.dart';
 import '../models/login_request_dto/login_request_dto.dart';
 import '../models/login_response_dto/login_response_dto.dart';
 import '../models/logout_request_dto/logout_request_dto.dart';
@@ -13,22 +18,22 @@ class AuthApiClient implements AuthApi {
   AuthApiClient(this._dio);
 
   @override
-  Future<LoginResponseDto> login(String email, String password) async {
+  Future<Either<AppError, LoginResponseDto>> login(String email, String password) async {
     try {
       final requestData = LoginRequestDto(email: email, password: password);
-
       final response = await _dio.post('$_route/login', data: requestData.toJson());
 
-      return LoginResponseDto.fromJson(response.data);
+      final loginResponse = LoginResponseDto.fromJson(response.data);
+      return Right(loginResponse);
     } on DioException catch (e) {
-      rethrow;
+      return Left(ErrorMapper.mapDioError(e));
     } catch (e) {
-      throw Exception('Unexpected error during login: ${e.toString()}');
+      return Left(AppError(code: AppErrorCode.unknown, originalError: e, isRetryable: false));
     }
   }
 
   @override
-  Future<void> logout(String token) async {
+  Future<Either<AppError, Unit>> logout(String token) async {
     try {
       final requestData = LogoutRequestDto(token: token);
 
@@ -37,10 +42,12 @@ class AuthApiClient implements AuthApi {
         data: requestData.toJson(),
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
+
+      return const Right(unit);
     } on DioException catch (e) {
-      rethrow;
+      return Left(ErrorMapper.mapDioError(e));
     } catch (e) {
-      throw Exception('Unexpected error during logout: ${e.toString()}');
+      return Left(AppError(code: AppErrorCode.unknown, originalError: e, isRetryable: false));
     }
   }
 }
