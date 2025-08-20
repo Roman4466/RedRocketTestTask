@@ -16,7 +16,7 @@ class AuthTokenInterceptor extends Interceptor {
 
       tokenResult.fold(
         (error) {
-          print('Error getting auth token: ${error}');
+          print('Error getting auth token: $error');
         },
         (token) {
           if (token != null && token.isNotEmpty) {

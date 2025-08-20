@@ -20,27 +20,15 @@ abstract class RegisterModule {
   Dio get dio {
     final dio = Dio(
       BaseOptions(
-        baseUrl: dotenv.env['API_BASE_URL'] ?? 'https://jsonplaceholder.typicode.com',
-        connectTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT'] ?? '30000')),
-        receiveTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT'] ?? '30000')),
-        sendTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT'] ?? '30000')),
+        baseUrl: dotenv.env['API_BASE_URL']!,
+        connectTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT']!)),
+        receiveTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT']!)),
+        sendTimeout: Duration(milliseconds: int.parse(dotenv.env['API_TIMEOUT']!)),
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
       ),
     );
 
-    // Add interceptors
-    dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        requestHeader: true,
-        responseHeader: true,
-        logPrint: (obj) => print(obj),
-      ),
-    );
-
     dio.interceptors.add(AuthTokenInterceptor());
-
     dio.interceptors.add(MockAuthInterceptor());
     dio.interceptors.add(HttpLoggerInterceptor());
 

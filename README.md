@@ -1,3 +1,20 @@
+# Red Rocket Test Task
+
+A Flutter authentication app demonstrating clean architecture, advanced error handling, and modern UI patterns.
+
+## 📱 Overview
+
+This project showcases a production-ready Flutter application with:
+- **Clean Architecture** with proper layer separation (Data, Domain, Presentation)
+- **Advanced Error Handling** using Either pattern with localized messages and retry functionality
+- **Modern State Management** using BLoC pattern with type-safe error states
+- **Professional UI/UX** with custom themes, animations, and responsive design
+- **Comprehensive Testing** scenarios for different network conditions and error states
+
+Built as a technical demonstration for Red Rocket's Flutter developer assessment.
+
+---
+
 ### Installation
 
 1. **Clone the repository**

@@ -55,115 +55,102 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.all(24.w),
             child: ReactiveForm(
               formGroup: form,
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight:
-                        MediaQuery.of(context).size.height -
-                        MediaQuery.of(context).padding.top -
-                        MediaQuery.of(context).padding.bottom -
-                        48.w,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Icon(Icons.rocket_launch, size: 64.w, color: AppColors.primary),
+                  SizedBox(height: 20.h),
+                  Text(
+                    l10n.welcomeBack,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.welcomeTitle,
                   ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Icon(Icons.rocket_launch, size: 64.w, color: AppColors.primary),
-                        SizedBox(height: 20.h),
-                        Text(
-                          l10n.welcomeBack,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.welcomeTitle,
-                        ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          l10n.signInToAccount,
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.welcomeSubtitle,
-                        ),
-                        SizedBox(height: 40.h),
+                  SizedBox(height: 8.h),
+                  Text(
+                    l10n.signInToAccount,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.welcomeSubtitle,
+                  ),
+                  SizedBox(height: 40.h),
 
-                        ReactiveTextField<String>(
-                          formControlName: 'email',
-                          decoration: InputDecoration(
-                            labelText: l10n.email,
-                            prefixIcon: const Icon(Icons.email_outlined),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validationMessages: {
-                            ValidationMessage.required: (_) => l10n.emailRequired,
-                            ValidationMessage.email: (_) => l10n.invalidEmailFormat,
-                          },
-                          showErrors: (control) => control.invalid && control.touched,
-                        ),
-                        SizedBox(height: 16.h),
-                        ReactiveTextField<String>(
-                          formControlName: 'password',
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: l10n.password,
-                            prefixIcon: const Icon(Icons.lock_outlined),
-                          ),
-                          validationMessages: {
-                            ValidationMessage.required: (_) => l10n.passwordRequired,
-                            ValidationMessage.minLength: (_) => l10n.passwordMinLength,
-                          },
-                          showErrors: (control) => control.invalid && control.touched,
-                        ),
-                        SizedBox(height: 24.h),
-                        BlocBuilder<AuthBloc, AuthState>(
-                          builder: (context, state) {
-                            final isLoading = state is AuthLoading;
-
-                            return ReactiveFormConsumer(
-                              builder: (context, formGroup, child) {
-                                final isFormValid = formGroup.valid;
-
-                                return GestureDetector(
-                                  onTap: () {
-                                    if (!isLoading) {
-                                      if (isFormValid) {
-                                        _onLoginPressed();
-                                      } else {
-                                        _showFormErrors(context, formGroup, l10n);
-                                      }
-                                    }
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                                    decoration: BoxDecoration(
-                                      color: isLoading || !isFormValid
-                                          ? AppColors.primary.withValues(alpha: 0.6)
-                                          : AppColors.primary,
-                                      borderRadius: BorderRadius.circular(12.r),
-                                    ),
-                                    child: Center(
-                                      child: isLoading
-                                          ? SizedBox(
-                                              height: 20.h,
-                                              width: 20.w,
-                                              child: const CircularProgressIndicator(
-                                                strokeWidth: 2,
-                                                valueColor: AlwaysStoppedAnimation<Color>(
-                                                  AppColors.textOnPrimary,
-                                                ),
-                                              ),
-                                            )
-                                          : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        SizedBox(height: 20.h),
-                      ],
+                  ReactiveTextField<String>(
+                    formControlName: 'email',
+                    decoration: InputDecoration(
+                      labelText: l10n.email,
+                      prefixIcon: const Icon(Icons.email_outlined),
                     ),
+                    keyboardType: TextInputType.emailAddress,
+                    validationMessages: {
+                      ValidationMessage.required: (_) => l10n.emailRequired,
+                      ValidationMessage.email: (_) => l10n.invalidEmailFormat,
+                    },
+                    showErrors: (control) => control.invalid && control.touched,
                   ),
-                ),
+                  SizedBox(height: 16.h),
+                  ReactiveTextField<String>(
+                    formControlName: 'password',
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: l10n.password,
+                      prefixIcon: const Icon(Icons.lock_outlined),
+                    ),
+                    validationMessages: {
+                      ValidationMessage.required: (_) => l10n.passwordRequired,
+                      ValidationMessage.minLength: (_) => l10n.passwordMinLength,
+                    },
+                    showErrors: (control) => control.invalid && control.touched,
+                  ),
+                  SizedBox(height: 24.h),
+                  BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      final isLoading = state is AuthLoading;
+
+                      return ReactiveFormConsumer(
+                        builder: (context, formGroup, child) {
+                          final isFormValid = formGroup.valid;
+
+                          return GestureDetector(
+                            onTap: () {
+                              if (!isLoading) {
+                                if (isFormValid) {
+                                  _onLoginPressed();
+                                } else {
+                                  _showFormErrors(context, formGroup, l10n);
+                                }
+                              }
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              decoration: BoxDecoration(
+                                color: isLoading || !isFormValid
+                                    ? AppColors.primary.withValues(alpha: 0.6)
+                                    : AppColors.primary,
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                              child: Center(
+                                child: isLoading
+                                    ? SizedBox(
+                                        height: 20.h,
+                                        width: 20.w,
+                                        child: const CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          valueColor: AlwaysStoppedAnimation<Color>(
+                                            AppColors.textOnPrimary,
+                                          ),
+                                        ),
+                                      )
+                                    : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 20.h),
+                ],
               ),
             ),
           ),

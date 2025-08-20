@@ -6,7 +6,7 @@ import 'di/injection_module.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: ".env");
   configureDependencies();
   runApp(const App());
 }

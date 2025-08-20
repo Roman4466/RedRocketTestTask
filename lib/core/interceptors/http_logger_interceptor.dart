@@ -24,7 +24,6 @@ class HttpLoggerInterceptor extends Interceptor {
           LoggerImpl(
             logger: Logger(
               printer: PrettyPrinter(
-                printTime: false,
                 colors: false,
                 printEmojis: true,
                 methodCount: 2,

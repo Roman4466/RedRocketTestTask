@@ -120,7 +120,7 @@ class _ErrorToastWidgetState extends State<_ErrorToastWidget> with SingleTickerP
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              _getErrorTitle(context),
+                              ErrorLocalizer.getLocalizedMessage(context, widget.error),
                               style: AppTextStyles.h6.copyWith(
                                 color: _getTextColor(),
                                 fontSize: 14.sp,
@@ -199,20 +199,6 @@ class _ErrorToastWidgetState extends State<_ErrorToastWidget> with SingleTickerP
   void _dismiss() async {
     await _controller.reverse();
     widget.onDismiss();
-  }
-
-  String _getErrorTitle(BuildContext context) {
-    switch (widget.error.code) {
-      case AppErrorCode.noConnection:
-      case AppErrorCode.connectionTimeout:
-        return 'Connection Issue';
-      case AppErrorCode.invalidCredentials:
-        return 'Invalid Credentials';
-      case AppErrorCode.serverError:
-        return 'Server Error';
-      default:
-        return 'Error';
-    }
   }
 
   IconData _getErrorIcon() {
