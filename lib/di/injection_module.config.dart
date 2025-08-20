@@ -26,6 +26,7 @@ import '../domain/use_case/check_auth_status_use_case.dart' as _i884;
 import '../domain/use_case/get_current_user_use_case.dart' as _i432;
 import '../domain/use_case/login_use_case.dart' as _i772;
 import '../domain/use_case/logout_use_case.dart' as _i235;
+import '../presentation/bloc/auth_bloc.dart' as _i244;
 import 'injection_module.dart' as _i212;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -63,6 +64,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i235.LogoutUseCase>(
       () => _i235.LogoutUseCase(gh<_i17.AuthApi>(), gh<_i579.SecureStorage>()),
+    );
+    gh.factory<_i244.AuthBloc>(
+      () => _i244.AuthBloc(
+        gh<_i772.LoginUseCase>(),
+        gh<_i235.LogoutUseCase>(),
+        gh<_i884.CheckAuthStatusUseCase>(),
+        gh<_i432.GetCurrentUserUseCase>(),
+      ),
     );
     return this;
   }
