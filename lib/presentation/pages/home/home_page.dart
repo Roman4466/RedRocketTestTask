@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:red_rocket_test_task/core/app_routes.dart';
 import 'package:red_rocket_test_task/l10n/l10n.dart';
 
+import '../../../core/app_routes.dart';
+import '../../../core/thema/app_colors.dart';
+import '../../../core/thema/app_text_styles.dart';
 import '../../../domain/entities/user.dart';
 import '../../bloc/auth_bloc.dart';
 
@@ -24,9 +26,6 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.home),
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          elevation: 0,
           actions: [
             IconButton(
               onPressed: () => _showLogoutDialog(context),
@@ -40,9 +39,9 @@ class HomePage extends StatelessWidget {
             if (state is AuthAuthenticated) {
               return _buildHomeContent(context, state.user);
             } else if (state is AuthLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(color: AppColors.primary));
             } else {
-              return Center(child: Text(l10n.somethingWentWrong));
+              return Center(child: Text(l10n.somethingWentWrong, style: AppTextStyles.bodyLarge));
             }
           },
         ),
@@ -62,51 +61,29 @@ class HomePage extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(24.w),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.deepPurple, Colors.deepPurple.shade300],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+              gradient: AppColors.welcomeGradient,
               borderRadius: BorderRadius.circular(16.r),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  l10n.welcomeBackComma,
-                  style: TextStyle(fontSize: 16.sp, color: Colors.white70),
-                ),
+                Text(l10n.welcomeBackComma, style: AppTextStyles.welcomeBackStyle),
                 SizedBox(height: 4.h),
-                Text(
-                  user.name,
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
+                Text(user.name, style: AppTextStyles.userNameStyle),
                 SizedBox(height: 8.h),
                 Row(
                   children: [
-                    Icon(Icons.email_outlined, size: 16.w, color: Colors.white70),
+                    Icon(Icons.email_outlined, size: 16.w, color: AppColors.textOnSecondary),
                     SizedBox(width: 8.w),
-                    Text(
-                      user.email,
-                      style: TextStyle(fontSize: 14.sp, color: Colors.white70),
-                    ),
+                    Text(user.email, style: AppTextStyles.userEmailStyle),
                   ],
                 ),
               ],
             ),
           ),
           SizedBox(height: 32.h),
-
-          Text(
-            l10n.quickActions,
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold, color: Colors.grey[800]),
-          ),
+          Text(l10n.quickActions, style: AppTextStyles.h4),
           SizedBox(height: 16.h),
-
           Expanded(
             child: GridView.count(
               crossAxisCount: 2,
@@ -140,19 +117,12 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-
           SizedBox(
             width: double.infinity,
             child: OutlinedButton.icon(
               onPressed: () => _showLogoutDialog(context),
               icon: const Icon(Icons.logout),
               label: Text(l10n.logout),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: Colors.red,
-                side: const BorderSide(color: Colors.red),
-                padding: EdgeInsets.symmetric(vertical: 12.h),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-              ),
             ),
           ),
         ],
@@ -167,8 +137,6 @@ class HomePage extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12.r),
@@ -177,22 +145,11 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 32.w, color: Colors.deepPurple),
+              Icon(icon, size: 32.w, color: AppColors.primary),
               SizedBox(height: 8.h),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.grey[800],
-                ),
-              ),
+              Text(title, style: AppTextStyles.cardTitle),
               SizedBox(height: 4.h),
-              Text(
-                subtitle,
-                style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
-              ),
+              Text(subtitle, style: AppTextStyles.cardSubtitle, textAlign: TextAlign.center),
             ],
           ),
         ),
@@ -233,9 +190,7 @@ class HomePage extends StatelessWidget {
         return AlertDialog(
           title: Text(feature),
           content: Text(l10n.featureComingSoon(feature)),
-          actions: [
-            TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.ok)),
-          ],
+          actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.ok))],
         );
       },
     );

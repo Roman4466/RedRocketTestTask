@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:red_rocket_test_task/core/app_routes.dart';
 import 'package:red_rocket_test_task/l10n/l10n.dart';
 
+import '../../../core/app_routes.dart';
+import '../../../core/thema/app_colors.dart';
+import '../../../core/thema/app_text_styles.dart';
 import '../../bloc/auth_bloc.dart';
 
 class SplashPage extends StatefulWidget {
@@ -36,7 +38,7 @@ class _SplashPageState extends State<SplashPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: AppColors.primary,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -44,28 +46,21 @@ class _SplashPageState extends State<SplashPage> {
               Icon(
                 Icons.rocket_launch,
                 size: 80.w,
-                color: Colors.white,
+                color: AppColors.textOnPrimary,
               ),
               SizedBox(height: 20.h),
               Text(
                 context.l10n.redRocket,
-                style: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: AppTextStyles.splashTitle,
               ),
               SizedBox(height: 8.h),
               Text(
                 context.l10n.testTask,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.white70,
-                ),
+                style: AppTextStyles.splashSubtitle,
               ),
               SizedBox(height: 40.h),
               const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.textOnPrimary),
               ),
             ],
           ),
