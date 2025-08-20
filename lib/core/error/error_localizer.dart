@@ -8,7 +8,6 @@ class ErrorLocalizer {
     final l10n = context.l10n;
 
     switch (error.code) {
-    // Network Errors
       case AppErrorCode.noConnection:
         return l10n.errorNoConnection;
       case AppErrorCode.connectionTimeout:
@@ -18,7 +17,6 @@ class ErrorLocalizer {
       case AppErrorCode.serverError:
         return l10n.errorServerError;
 
-    // Authentication Errors
       case AppErrorCode.invalidCredentials:
         return l10n.errorInvalidCredentials;
       case AppErrorCode.accountLocked:
@@ -30,7 +28,6 @@ class ErrorLocalizer {
       case AppErrorCode.unauthorizedAccess:
         return l10n.errorUnauthorizedAccess;
 
-    // Validation Errors
       case AppErrorCode.invalidEmail:
         return l10n.invalidEmailFormat;
       case AppErrorCode.weakPassword:
@@ -40,7 +37,6 @@ class ErrorLocalizer {
       case AppErrorCode.passwordRequired:
         return l10n.passwordRequired;
 
-    // General Errors
       case AppErrorCode.serviceUnavailable:
         return l10n.errorServiceUnavailable;
       case AppErrorCode.rateLimitExceeded:

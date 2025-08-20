@@ -1,16 +1,51 @@
-# red_rocket_test_task
+### Installation
 
-A new Flutter project.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Roman4466/RedRocketTestTask.git
+   cd RedRocketTestTask
+   ```
 
-## Getting Started
+2. **Use correct flutter version**
+   ```bash
+    fvm use
+   ```
 
-This project is a starting point for a Flutter application.
+3**Install dependencies**
+   ```bash
+   fvm flutter pub get
+   ```
 
-A few resources to get you started if this is your first Flutter project:
+4**Generate code**
+   ```bash
+   fvm dart run build_runner watch --delete-conflicting-outputs
+   ```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+5**Generate localizations**
+   ```bash
+   fvm flutter gen-l10n
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+6**Run the app**
+   ```bash
+   fvm flutter run
+   ```
+
+## 🧪 Testing Credentials
+
+The app includes a mock API with different test scenarios:
+
+### **Valid Login**
+- **Email**: `test@example.com`
+- **Password**: `password123`
+- **Result**: Successful authentication
+
+### **Error Scenarios**
+
+| Scenario | Email | Password | Expected Result |
+|----------|-------|----------|-----------------|
+| **Invalid Credentials** | `invalid@test.com` | `wrongpass` | Authentication error (no retry) |
+| **Connection Timeout** | `timeout@test.com` | `password123` | Timeout error with retry button |
+| **No Internet** | `noconnection@test.com` | `password123` | Connection error with retry |
+| **Server Error** | `servererror@test.com` | `password123` | Server error (500) with retry |
+| **Rate Limiting** | `ratelimit@test.com` | `password123` | Too many requests with retry |

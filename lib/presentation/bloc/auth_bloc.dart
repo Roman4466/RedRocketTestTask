@@ -128,18 +128,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return AppError.unknown(error.toString());
     }
   }
-
-  bool get isAuthenticated => state is AuthAuthenticated;
-
-  bool get isLoading => state is AuthLoading;
-
-  bool get hasError => state is AuthError;
-
-  AppError? get currentError => state is AuthError ? (state as AuthError).error : null;
-
-  String? get errorMessage => currentError?.message;
-
-  User? get currentUser => state is AuthAuthenticated ? (state as AuthAuthenticated).user : null;
-
-  bool get canRetry => currentError?.isRetryable == true && _lastAction != null;
 }

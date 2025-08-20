@@ -1,7 +1,5 @@
-// lib/data/api/auth_api_client.dart
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import '../../core/error/error_mapper.dart';
 import '../models/login_request_dto/login_request_dto.dart';
 import '../models/login_response_dto/login_response_dto.dart';
 import '../models/logout_request_dto/logout_request_dto.dart';
@@ -23,8 +21,7 @@ class AuthApiClient implements AuthApi {
 
       return LoginResponseDto.fromJson(response.data);
     } on DioException catch (e) {
-      final appError = ErrorMapper.mapDioError(e);
-      throw Exception(appError.message);
+      rethrow;
     } catch (e) {
       throw Exception('Unexpected error during login: ${e.toString()}');
     }
@@ -41,8 +38,7 @@ class AuthApiClient implements AuthApi {
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
     } on DioException catch (e) {
-      final appError = ErrorMapper.mapDioError(e);
-      throw Exception(appError.message);
+      rethrow;
     } catch (e) {
       throw Exception('Unexpected error during logout: ${e.toString()}');
     }

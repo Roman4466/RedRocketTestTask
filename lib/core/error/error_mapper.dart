@@ -11,14 +11,12 @@ class ErrorMapper {
       case DioExceptionType.receiveTimeout:
         return const AppError(
           code: AppErrorCode.connectionTimeout,
-          message: 'Request timeout',
           isRetryable: true,
         );
 
       case DioExceptionType.connectionError:
         return const AppError(
           code: AppErrorCode.noConnection,
-          message: 'No internet connection',
           isRetryable: true,
         );
 
@@ -28,14 +26,12 @@ class ErrorMapper {
       case DioExceptionType.cancel:
         return const AppError(
           code: AppErrorCode.unknown,
-          message: 'Request was cancelled',
           isRetryable: false,
         );
 
       default:
         return AppError(
           code: AppErrorCode.unknown,
-          message: error.message ?? 'Unknown network error',
           originalError: error,
           isRetryable: false,
         );
@@ -49,35 +45,30 @@ class ErrorMapper {
       case 400:
         return const AppError(
           code: AppErrorCode.invalidCredentials,
-          message: 'Bad request',
           isRetryable: false,
         );
 
       case 401:
         return const AppError(
           code: AppErrorCode.invalidCredentials,
-          message: 'Invalid credentials',
           isRetryable: false,
         );
 
       case 403:
         return const AppError(
           code: AppErrorCode.unauthorizedAccess,
-          message: 'Access forbidden',
           isRetryable: false,
         );
 
       case 404:
         return const AppError(
           code: AppErrorCode.accountNotFound,
-          message: 'Account not found',
           isRetryable: false,
         );
 
       case 429:
         return const AppError(
           code: AppErrorCode.rateLimitExceeded,
-          message: 'Too many requests',
           isRetryable: true,
         );
 
@@ -86,14 +77,12 @@ class ErrorMapper {
       case 503:
         return const AppError(
           code: AppErrorCode.serverError,
-          message: 'Server error',
           isRetryable: true,
         );
 
       default:
         return AppError(
           code: AppErrorCode.unknown,
-          message: 'HTTP Error $statusCode',
           originalError: error,
           isRetryable: statusCode != null && statusCode >= 500,
         );
@@ -111,7 +100,6 @@ class ErrorMapper {
 
     return AppError(
       code: AppErrorCode.unknown,
-      message: exception.toString(),
       originalError: exception,
       isRetryable: false,
     );
@@ -124,13 +112,11 @@ class ErrorMapper {
       if (message.contains('empty')) {
         return const AppError(
           code: AppErrorCode.emailRequired,
-          message: 'Email is required',
           isRetryable: false,
         );
       } else if (message.contains('format') || message.contains('invalid')) {
         return const AppError(
           code: AppErrorCode.invalidEmail,
-          message: 'Invalid email format',
           isRetryable: false,
         );
       }
@@ -140,13 +126,11 @@ class ErrorMapper {
       if (message.contains('empty')) {
         return const AppError(
           code: AppErrorCode.passwordRequired,
-          message: 'Password is required',
           isRetryable: false,
         );
       } else if (message.contains('6 characters') || message.contains('short')) {
         return const AppError(
           code: AppErrorCode.weakPassword,
-          message: 'Password must be at least 6 characters',
           isRetryable: false,
         );
       }
@@ -154,7 +138,6 @@ class ErrorMapper {
 
     return AppError(
       code: AppErrorCode.unknown,
-      message: error.message.toString(),
       originalError: error,
       isRetryable: false,
     );
@@ -167,13 +150,11 @@ class ErrorMapper {
       if (message.contains('empty')) {
         return const AppError(
           code: AppErrorCode.emailRequired,
-          message: 'Email is required',
           isRetryable: false,
         );
       } else if (message.contains('format') || message.contains('invalid')) {
         return const AppError(
           code: AppErrorCode.invalidEmail,
-          message: 'Invalid email format',
           isRetryable: false,
         );
       }
@@ -183,13 +164,11 @@ class ErrorMapper {
       if (message.contains('empty')) {
         return const AppError(
           code: AppErrorCode.passwordRequired,
-          message: 'Password is required',
           isRetryable: false,
         );
       } else if (message.contains('6 characters') || message.contains('short')) {
         return const AppError(
           code: AppErrorCode.weakPassword,
-          message: 'Password must be at least 6 characters',
           isRetryable: false,
         );
       }
@@ -197,7 +176,6 @@ class ErrorMapper {
 
     return AppError(
       code: AppErrorCode.unknown,
-      message: error.message.toString(),
       originalError: error,
       isRetryable: false,
     );

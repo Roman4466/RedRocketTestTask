@@ -162,46 +162,6 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SizedBox(height: 20.h),
-
-                        // Valid Test Credentials
-                        _buildTestCredentialsBox(
-                          title: l10n.testCredentials,
-                          credentials: l10n.testCredentialsText,
-                          isValid: true,
-                        ),
-                        SizedBox(height: 12.h),
-
-                        // Error Test Scenarios
-                        _buildTestCredentialsBox(
-                          title: 'Connection Timeout Test',
-                          credentials: 'Email: timeout@test.com\nPassword: password123',
-                          isValid: false,
-                          icon: Icons.timer_off,
-                        ),
-                        SizedBox(height: 8.h),
-
-                        _buildTestCredentialsBox(
-                          title: 'No Connection Test',
-                          credentials: 'Email: noconnection@test.com\nPassword: password123',
-                          isValid: false,
-                          icon: Icons.wifi_off,
-                        ),
-                        SizedBox(height: 8.h),
-
-                        _buildTestCredentialsBox(
-                          title: 'Server Error Test',
-                          credentials: 'Email: servererror@test.com\nPassword: password123',
-                          isValid: false,
-                          icon: Icons.error_outline,
-                        ),
-                        SizedBox(height: 8.h),
-
-                        _buildTestCredentialsBox(
-                          title: 'Invalid Credentials Test',
-                          credentials: 'Email: invalid@test.com\nPassword: wrongpass',
-                          isValid: false,
-                          icon: Icons.lock_outline,
-                        ),
                       ],
                     ),
                   ),
@@ -210,57 +170,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTestCredentialsBox({
-    required String title,
-    required String credentials,
-    required bool isValid,
-    IconData? icon,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: isValid ? AppColors.testCredentialsBg : AppColors.error.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: isValid ? AppColors.testCredentialsBorder : AppColors.error.withOpacity(0.3),
-        ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (icon != null) ...[
-                Icon(
-                  icon,
-                  size: 14.w,
-                  color: isValid ? AppColors.testCredentialsTitle : AppColors.error,
-                ),
-                SizedBox(width: 4.w),
-              ],
-              Text(
-                title,
-                style: AppTextStyles.testCredentialsTitle.copyWith(
-                  color: isValid ? AppColors.testCredentialsTitle : AppColors.error,
-                  fontSize: 12.sp,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 2.h),
-          Text(
-            credentials,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.testCredentialsBody.copyWith(
-              color: isValid ? AppColors.testCredentialsText : AppColors.error.withOpacity(0.8),
-              fontSize: 10.sp,
-            ),
-          ),
-        ],
       ),
     );
   }
