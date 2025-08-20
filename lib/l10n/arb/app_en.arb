@@ -15,7 +15,7 @@
   "passwordMinLength": "Password must be at least 6 characters",
   "home": "Home",
   "logout": "Logout",
-  "welcomeBackComma": "Welcome back,",
+  "welcomeBackComma": "Welcome,",
   "quickActions": "Quick Actions",
   "profile": "Profile",
   "viewProfile": "View profile",

@@ -55,7 +55,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logout => 'Logout';
 
   @override
-  String get welcomeBackComma => 'Welcome back,';
+  String get welcomeBackComma => 'Welcome,';
 
   @override
   String get quickActions => 'Quick Actions';

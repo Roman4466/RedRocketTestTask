@@ -29,12 +29,7 @@ class UserWelcomeCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n.welcomeBackComma,
-            style: AppTextStyles.welcomeBackStyle,
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            user.name,
+            "${l10n.welcomeBackComma} ${user.name}",
             style: AppTextStyles.userNameStyle,
           ),
           SizedBox(height: 8.h),

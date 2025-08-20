@@ -187,7 +187,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeBackComma.
   ///
   /// In en, this message translates to:
-  /// **'Welcome back,'**
+  /// **'Welcome,'**
   String get welcomeBackComma;
 
   /// No description provided for @quickActions.
