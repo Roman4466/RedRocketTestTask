@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 import 'package:red_rocket_test_task/l10n/l10n.dart';
 
 import '../../../core/app_routes.dart';
@@ -19,15 +18,55 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late FormGroup form;
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _emailFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+
+  bool _isFormValid = false;
+  bool _emailTouched = false;
+  bool _passwordTouched = false;
 
   @override
   void initState() {
     super.initState();
-    form = FormGroup({
-      'email': FormControl<String>(validators: [Validators.required, Validators.email]),
-      'password': FormControl<String>(validators: [Validators.required, Validators.minLength(6)]),
+    _emailController.addListener(_validateForm);
+    _passwordController.addListener(_validateForm);
+
+    _emailFocusNode.addListener(() {
+      if (!_emailFocusNode.hasFocus && !_emailTouched) {
+        setState(() {
+          _emailTouched = true;
+        });
+      }
     });
+
+    _passwordFocusNode.addListener(() {
+      if (!_passwordFocusNode.hasFocus && !_passwordTouched) {
+        setState(() {
+          _passwordTouched = true;
+        });
+      }
+    });
+  }
+
+  void _validateForm() {
+    final isValid = _formKey.currentState?.validate() ?? false;
+    if (isValid != _isFormValid) {
+      setState(() {
+        _isFormValid = isValid;
+      });
+    }
+  }
+
+  void _moveToPasswordField() {
+    _passwordFocusNode.requestFocus();
+  }
+
+  void _submitForm() {
+    _passwordFocusNode.unfocus();
+    _onLoginPressed();
   }
 
   @override
@@ -53,14 +92,15 @@ class _LoginPageState extends State<LoginPage> {
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(24.w),
-            child: ReactiveForm(
-              formGroup: form,
+            child: Form(
+              key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Icon(Icons.rocket_launch, size: 64.w, color: AppColors.primary),
                   SizedBox(height: 20.h),
+
                   Text(
                     l10n.welcomeBack,
                     textAlign: TextAlign.center,
@@ -73,79 +113,88 @@ class _LoginPageState extends State<LoginPage> {
                     style: AppTextStyles.welcomeSubtitle,
                   ),
                   SizedBox(height: 40.h),
-
-                  ReactiveTextField<String>(
-                    formControlName: 'email',
+                  TextFormField(
+                    controller: _emailController,
+                    focusNode: _emailFocusNode,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) => _moveToPasswordField(),
                     decoration: InputDecoration(
                       labelText: l10n.email,
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
-                    keyboardType: TextInputType.emailAddress,
-                    validationMessages: {
-                      ValidationMessage.required: (_) => l10n.emailRequired,
-                      ValidationMessage.email: (_) => l10n.invalidEmailFormat,
-                    },
-                    showErrors: (control) => control.invalid && control.touched,
+                    validator: _emailTouched ? (value) {
+                      if (value == null || value.isEmpty) {
+                        return l10n.emailRequired;
+                      }
+                      if (!_isValidEmail(value)) {
+                        return l10n.invalidEmailFormat;
+                      }
+                      return null;
+                    } : null,
+                    onChanged: (_) => _validateForm(),
                   ),
                   SizedBox(height: 16.h),
-                  ReactiveTextField<String>(
-                    formControlName: 'password',
+                  TextFormField(
+                    controller: _passwordController,
+                    focusNode: _passwordFocusNode,
                     obscureText: true,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) => _submitForm(),
                     decoration: InputDecoration(
                       labelText: l10n.password,
                       prefixIcon: const Icon(Icons.lock_outlined),
                     ),
-                    validationMessages: {
-                      ValidationMessage.required: (_) => l10n.passwordRequired,
-                      ValidationMessage.minLength: (_) => l10n.passwordMinLength,
-                    },
-                    showErrors: (control) => control.invalid && control.touched,
+                    validator: _passwordTouched ? (value) {
+                      if (value == null || value.isEmpty) {
+                        return l10n.passwordRequired;
+                      }
+                      if (value.length < 6) {
+                        return l10n.passwordMinLength;
+                      }
+                      return null;
+                    } : null,
+                    onChanged: (_) => _validateForm(),
                   ),
                   SizedBox(height: 24.h),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
 
-                      return ReactiveFormConsumer(
-                        builder: (context, formGroup, child) {
-                          final isFormValid = formGroup.valid;
-
-                          return GestureDetector(
-                            onTap: () {
-                              if (!isLoading) {
-                                if (isFormValid) {
-                                  _onLoginPressed();
-                                } else {
-                                  _showFormErrors(context, formGroup, l10n);
-                                }
-                              }
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: 16.h),
-                              decoration: BoxDecoration(
-                                color: isLoading || !isFormValid
-                                    ? AppColors.primary.withValues(alpha: 0.6)
-                                    : AppColors.primary,
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              child: Center(
-                                child: isLoading
-                                    ? SizedBox(
-                                        height: 20.h,
-                                        width: 20.w,
-                                        child: const CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          valueColor: AlwaysStoppedAnimation<Color>(
-                                            AppColors.textOnPrimary,
-                                          ),
-                                        ),
-                                      )
-                                    : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
-                              ),
-                            ),
-                          );
+                      return GestureDetector(
+                        onTap: () {
+                          if (!isLoading) {
+                            if (_isFormValid) {
+                              _onLoginPressed();
+                            } else {
+                              _showFormErrors(context, l10n);
+                            }
+                          }
                         },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          decoration: BoxDecoration(
+                            color: isLoading || !_isFormValid
+                                ? AppColors.primary.withValues(alpha: 0.6)
+                                : AppColors.primary,
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          child: Center(
+                            child: isLoading
+                                ? SizedBox(
+                              height: 20.h,
+                              width: 20.w,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.textOnPrimary,
+                                ),
+                              ),
+                            )
+                                : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -160,61 +209,49 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginPressed() {
-    if (form.valid) {
-      final email = form.control('email').value as String;
-      final password = form.control('password').value as String;
+    setState(() {
+      _emailTouched = true;
+      _passwordTouched = true;
+    });
+
+    if (_formKey.currentState!.validate()) {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text;
 
       context.read<AuthBloc>().add(AuthLoginRequested(email: email, password: password));
     }
   }
 
-  void _showFormErrors(BuildContext context, FormGroup formGroup, dynamic l10n) {
-    formGroup.markAllAsTouched();
-    setState(() {});
+  void _showFormErrors(BuildContext context, dynamic l10n) {
+    setState(() {
+      _emailTouched = true;
+      _passwordTouched = true;
+    });
 
-    List<String> errorMessages = [];
+    _formKey.currentState!.validate();
 
-    final emailControl = formGroup.control('email');
-    if (emailControl.hasErrors) {
-      if (emailControl.hasError(ValidationMessage.required)) {
-        errorMessages.add(l10n.emailRequired);
-      } else if (emailControl.hasError(ValidationMessage.email)) {
-        errorMessages.add(l10n.invalidEmailFormat);
-      }
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(l10n.pleaseFixErrors),
+        backgroundColor: AppColors.error,
+        duration: const Duration(seconds: 3),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
+  }
 
-    final passwordControl = formGroup.control('password');
-    if (passwordControl.hasErrors) {
-      if (passwordControl.hasError(ValidationMessage.required)) {
-        errorMessages.add(l10n.passwordRequired);
-      } else if (passwordControl.hasError(ValidationMessage.minLength)) {
-        errorMessages.add(l10n.passwordMinLength);
-      }
-    }
-
-    if (errorMessages.isNotEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(l10n.pleaseFixErrors, style: const TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 4.h),
-              ...errorMessages.map((error) => Text('• $error')),
-            ],
-          ),
-          backgroundColor: AppColors.error,
-          duration: const Duration(seconds: 4),
-          behavior: SnackBarBehavior.floating,
-        ),
-      );
-    }
+  bool _isValidEmail(String email) {
+    return RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 
   @override
   void dispose() {
-    form.dispose();
+    _emailController.removeListener(_validateForm);
+    _passwordController.removeListener(_validateForm);
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 }
