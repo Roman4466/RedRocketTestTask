@@ -1,0 +1,24 @@
+enum AppErrorCode {
+  noConnection,
+  connectionTimeout,
+  serverTimeout,
+  serverError,
+
+  invalidCredentials,
+  accountLocked,
+  accountNotFound,
+  tokenExpired,
+  unauthorizedAccess,
+
+  invalidEmail,
+  weakPassword,
+  emailRequired,
+  passwordRequired,
+
+  unknown,
+  serviceUnavailable,
+  rateLimitExceeded,
+
+  storageError,
+  tokenSaveError,
+}

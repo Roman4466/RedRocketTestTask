@@ -37,5 +37,31 @@
         "type": "String"
       }
     }
-  }
+  },
+  "errorNoConnection": "No internet connection. Please check your network and try again.",
+  "errorConnectionTimeout": "Connection timeout. Please try again.",
+  "errorServerTimeout": "Server is taking too long to respond. Please try again.",
+  "errorServerError": "Server error occurred. Please try again later.",
+  "errorInvalidCredentials": "Invalid email or password. Please check your credentials and try again.",
+  "errorAccountLocked": "Your account has been locked. Please contact support.",
+  "errorAccountNotFound": "Account not found. Please check your email address.",
+  "errorTokenExpired": "Your session has expired. Please log in again.",
+  "errorUnauthorizedAccess": "You don't have permission to access this resource.",
+  "errorServiceUnavailable": "Service is temporarily unavailable. Please try again later.",
+  "errorRateLimitExceeded": "Too many requests. Please wait a moment and try again.",
+  "errorStorageError": "Failed to save data locally. Please try again.",
+  "errorTokenSaveError": "Failed to save authentication data. Please try logging in again.",
+  "errorUnknown": "An unexpected error occurred. Please try again.",
+
+  "retry": "Retry",
+  "retryConnection": "Check Connection",
+  "retryRequest": "Try Again",
+  "tryAgainLater": "Try Later",
+  "pleaseFixErrors": "Please fix the following errors:",
+  "formIsInvalid": "Form is Invalid",
+
+  "connectionIssue": "Connection Issue",
+  "authenticationFailed": "Authentication Failed",
+  "validationError": "Validation Error",
+  "generalError": "Error"
 }

@@ -8,6 +8,7 @@ import 'package:red_rocket_test_task/l10n/l10n.dart';
 import '../../../core/app_routes.dart';
 import '../../../core/thema/app_colors.dart';
 import '../../../core/thema/app_text_styles.dart';
+import '../../../core/widgets/error_toast.dart';
 import '../../bloc/auth_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -38,8 +39,12 @@ class _LoginPageState extends State<LoginPage> {
         if (state is AuthAuthenticated) {
           context.go(AppRoutePaths.home);
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: AppColors.error),
+          ErrorToast.show(
+            context,
+            error: state.error,
+            onRetry: state.error.isRetryable
+                ? () => context.read<AuthBloc>().add(const AuthRetryLastAction())
+                : null,
           );
         }
       },
@@ -53,7 +58,8 @@ class _LoginPageState extends State<LoginPage> {
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height -
+                    minHeight:
+                        MediaQuery.of(context).size.height -
                         MediaQuery.of(context).padding.top -
                         MediaQuery.of(context).padding.bottom -
                         48.w,
@@ -77,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: AppTextStyles.welcomeSubtitle,
                         ),
                         SizedBox(height: 40.h),
+
                         ReactiveTextField<String>(
                           formControlName: 'email',
                           decoration: InputDecoration(
@@ -88,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                             ValidationMessage.required: (_) => l10n.emailRequired,
                             ValidationMessage.email: (_) => l10n.invalidEmailFormat,
                           },
+                          showErrors: (control) => control.invalid && control.touched,
                         ),
                         SizedBox(height: 16.h),
                         ReactiveTextField<String>(
@@ -101,8 +109,11 @@ class _LoginPageState extends State<LoginPage> {
                             ValidationMessage.required: (_) => l10n.passwordRequired,
                             ValidationMessage.minLength: (_) => l10n.passwordMinLength,
                           },
+                          showErrors: (control) => control.invalid && control.touched,
                         ),
                         SizedBox(height: 24.h),
+
+                        // Login button
                         BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
                             final isLoading = state is AuthLoading;
@@ -111,72 +122,85 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (context, formGroup, child) {
                                 final isFormValid = formGroup.valid;
 
-                                return Column(
-                                  children: [
-                                    // Clickable container that handles both enabled and disabled states
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (!isLoading) {
-                                          if (isFormValid) {
-                                            _onLoginPressed();
-                                          } else {
-                                            _showFormErrors(context, formGroup, l10n);
-                                          }
-                                        }
-                                      },
-                                      child: Container(
-                                        width: double.infinity,
-                                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                                        decoration: BoxDecoration(
-                                          color: isLoading || !isFormValid
-                                              ? AppColors.primary.withOpacity(0.6)
-                                              : AppColors.primary,
-                                          borderRadius: BorderRadius.circular(12.r),
-                                        ),
-                                        child: Center(
-                                          child: isLoading
-                                              ? SizedBox(
-                                            height: 20.h,
-                                            width: 20.w,
-                                            child: const CircularProgressIndicator(
-                                              strokeWidth: 2,
-                                              valueColor: AlwaysStoppedAnimation<Color>(
-                                                AppColors.textOnPrimary,
-                                              ),
-                                            ),
-                                          )
-                                              : Text(
-                                            l10n.signIn,
-                                            style: AppTextStyles.buttonLarge,
-                                          ),
-                                        ),
-                                      ),
+                                return GestureDetector(
+                                  onTap: () {
+                                    if (!isLoading) {
+                                      if (isFormValid) {
+                                        _onLoginPressed();
+                                      } else {
+                                        _showFormErrors(context, formGroup, l10n);
+                                      }
+                                    }
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                                    decoration: BoxDecoration(
+                                      color: isLoading || !isFormValid
+                                          ? AppColors.primary.withOpacity(0.6)
+                                          : AppColors.primary,
+                                      borderRadius: BorderRadius.circular(12.r),
                                     ),
-                                  ],
+                                    child: Center(
+                                      child: isLoading
+                                          ? SizedBox(
+                                              height: 20.h,
+                                              width: 20.w,
+                                              child: const CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                valueColor: AlwaysStoppedAnimation<Color>(
+                                                  AppColors.textOnPrimary,
+                                                ),
+                                              ),
+                                            )
+                                          : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
+                                    ),
+                                  ),
                                 );
                               },
                             );
                           },
                         ),
                         SizedBox(height: 20.h),
-                        Container(
-                          padding: EdgeInsets.all(16.w),
-                          decoration: BoxDecoration(
-                            color: AppColors.testCredentialsBg,
-                            borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: AppColors.testCredentialsBorder),
-                          ),
-                          child: Column(
-                            children: [
-                              Text(l10n.testCredentials, style: AppTextStyles.testCredentialsTitle),
-                              SizedBox(height: 4.h),
-                              Text(
-                                l10n.testCredentialsText,
-                                textAlign: TextAlign.center,
-                                style: AppTextStyles.testCredentialsBody,
-                              ),
-                            ],
-                          ),
+
+                        // Valid Test Credentials
+                        _buildTestCredentialsBox(
+                          title: l10n.testCredentials,
+                          credentials: l10n.testCredentialsText,
+                          isValid: true,
+                        ),
+                        SizedBox(height: 12.h),
+
+                        // Error Test Scenarios
+                        _buildTestCredentialsBox(
+                          title: 'Connection Timeout Test',
+                          credentials: 'Email: timeout@test.com\nPassword: password123',
+                          isValid: false,
+                          icon: Icons.timer_off,
+                        ),
+                        SizedBox(height: 8.h),
+
+                        _buildTestCredentialsBox(
+                          title: 'No Connection Test',
+                          credentials: 'Email: noconnection@test.com\nPassword: password123',
+                          isValid: false,
+                          icon: Icons.wifi_off,
+                        ),
+                        SizedBox(height: 8.h),
+
+                        _buildTestCredentialsBox(
+                          title: 'Server Error Test',
+                          credentials: 'Email: servererror@test.com\nPassword: password123',
+                          isValid: false,
+                          icon: Icons.error_outline,
+                        ),
+                        SizedBox(height: 8.h),
+
+                        _buildTestCredentialsBox(
+                          title: 'Invalid Credentials Test',
+                          credentials: 'Email: invalid@test.com\nPassword: wrongpass',
+                          isValid: false,
+                          icon: Icons.lock_outline,
                         ),
                       ],
                     ),
@@ -186,6 +210,57 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTestCredentialsBox({
+    required String title,
+    required String credentials,
+    required bool isValid,
+    IconData? icon,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(12.w),
+      decoration: BoxDecoration(
+        color: isValid ? AppColors.testCredentialsBg : AppColors.error.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: isValid ? AppColors.testCredentialsBorder : AppColors.error.withOpacity(0.3),
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (icon != null) ...[
+                Icon(
+                  icon,
+                  size: 14.w,
+                  color: isValid ? AppColors.testCredentialsTitle : AppColors.error,
+                ),
+                SizedBox(width: 4.w),
+              ],
+              Text(
+                title,
+                style: AppTextStyles.testCredentialsTitle.copyWith(
+                  color: isValid ? AppColors.testCredentialsTitle : AppColors.error,
+                  fontSize: 12.sp,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            credentials,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.testCredentialsBody.copyWith(
+              color: isValid ? AppColors.testCredentialsText : AppColors.error.withOpacity(0.8),
+              fontSize: 10.sp,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -201,6 +276,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _showFormErrors(BuildContext context, FormGroup formGroup, dynamic l10n) {
     formGroup.markAllAsTouched();
+    setState(() {});
 
     List<String> errorMessages = [];
 
@@ -223,18 +299,13 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     if (errorMessages.isNotEmpty) {
-      // Option 1: Show as SnackBar with all errors
-      final errorText = errorMessages.join('\n');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.pleaseFixErrors,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
+              Text(l10n.pleaseFixErrors, style: const TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 4.h),
               ...errorMessages.map((error) => Text('• $error')),
             ],
@@ -244,50 +315,7 @@ class _LoginPageState extends State<LoginPage> {
           behavior: SnackBarBehavior.floating,
         ),
       );
-
-      // Option 2: Show as Dialog (alternative approach)
-      // _showErrorDialog(context, l10n, errorMessages);
     }
-  }
-  void _showErrorDialog(BuildContext context, dynamic l10n, List<String> errorMessages) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Row(
-            children: [
-              Icon(Icons.error_outline, color: AppColors.error),
-              SizedBox(width: 8.w),
-              Text(l10n.formIsInvalid),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(l10n.pleaseFixErrors),
-              SizedBox(height: 12.h),
-              ...errorMessages.map((error) => Padding(
-                padding: EdgeInsets.only(bottom: 4.h),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('• ', style: TextStyle(color: AppColors.error)),
-                    Expanded(child: Text(error)),
-                  ],
-                ),
-              )),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(l10n.ok),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   @override

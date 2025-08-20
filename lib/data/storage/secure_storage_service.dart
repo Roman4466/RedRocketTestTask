@@ -54,7 +54,6 @@ class SecureStorageService implements SecureStorage {
       await _storage.delete(key: _tokenKey);
       await _storage.delete(key: _refreshTokenKey);
     } catch (e) {
-      // Log error but don't throw - clearing tokens should not fail the app
       print('Error clearing tokens: ${e.toString()}');
     }
   }

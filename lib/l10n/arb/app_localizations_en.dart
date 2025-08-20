@@ -103,4 +103,88 @@ class AppLocalizationsEn extends AppLocalizations {
   String featureComingSoon(String feature) {
     return '$feature feature coming soon!';
   }
+
+  @override
+  String get errorNoConnection =>
+      'No internet connection. Please check your network and try again.';
+
+  @override
+  String get errorConnectionTimeout => 'Connection timeout. Please try again.';
+
+  @override
+  String get errorServerTimeout =>
+      'Server is taking too long to respond. Please try again.';
+
+  @override
+  String get errorServerError =>
+      'Server error occurred. Please try again later.';
+
+  @override
+  String get errorInvalidCredentials =>
+      'Invalid email or password. Please check your credentials and try again.';
+
+  @override
+  String get errorAccountLocked =>
+      'Your account has been locked. Please contact support.';
+
+  @override
+  String get errorAccountNotFound =>
+      'Account not found. Please check your email address.';
+
+  @override
+  String get errorTokenExpired =>
+      'Your session has expired. Please log in again.';
+
+  @override
+  String get errorUnauthorizedAccess =>
+      'You don\'t have permission to access this resource.';
+
+  @override
+  String get errorServiceUnavailable =>
+      'Service is temporarily unavailable. Please try again later.';
+
+  @override
+  String get errorRateLimitExceeded =>
+      'Too many requests. Please wait a moment and try again.';
+
+  @override
+  String get errorStorageError =>
+      'Failed to save data locally. Please try again.';
+
+  @override
+  String get errorTokenSaveError =>
+      'Failed to save authentication data. Please try logging in again.';
+
+  @override
+  String get errorUnknown => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get retryConnection => 'Check Connection';
+
+  @override
+  String get retryRequest => 'Try Again';
+
+  @override
+  String get tryAgainLater => 'Try Later';
+
+  @override
+  String get pleaseFixErrors => 'Please fix the following errors:';
+
+  @override
+  String get formIsInvalid => 'Form is Invalid';
+
+  @override
+  String get connectionIssue => 'Connection Issue';
+
+  @override
+  String get authenticationFailed => 'Authentication Failed';
+
+  @override
+  String get validationError => 'Validation Error';
+
+  @override
+  String get generalError => 'Error';
 }

@@ -279,6 +279,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{feature} feature coming soon!'**
   String featureComingSoon(String feature);
+
+  /// No description provided for @errorNoConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network and try again.'**
+  String get errorNoConnection;
+
+  /// No description provided for @errorConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please try again.'**
+  String get errorConnectionTimeout;
+
+  /// No description provided for @errorServerTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Server is taking too long to respond. Please try again.'**
+  String get errorServerTimeout;
+
+  /// No description provided for @errorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error occurred. Please try again later.'**
+  String get errorServerError;
+
+  /// No description provided for @errorInvalidCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email or password. Please check your credentials and try again.'**
+  String get errorInvalidCredentials;
+
+  /// No description provided for @errorAccountLocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account has been locked. Please contact support.'**
+  String get errorAccountLocked;
+
+  /// No description provided for @errorAccountNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Account not found. Please check your email address.'**
+  String get errorAccountNotFound;
+
+  /// No description provided for @errorTokenExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please log in again.'**
+  String get errorTokenExpired;
+
+  /// No description provided for @errorUnauthorizedAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'You don\'t have permission to access this resource.'**
+  String get errorUnauthorizedAccess;
+
+  /// No description provided for @errorServiceUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Service is temporarily unavailable. Please try again later.'**
+  String get errorServiceUnavailable;
+
+  /// No description provided for @errorRateLimitExceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please wait a moment and try again.'**
+  String get errorRateLimitExceeded;
+
+  /// No description provided for @errorStorageError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save data locally. Please try again.'**
+  String get errorStorageError;
+
+  /// No description provided for @errorTokenSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save authentication data. Please try logging in again.'**
+  String get errorTokenSaveError;
+
+  /// No description provided for @errorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred. Please try again.'**
+  String get errorUnknown;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @retryConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Connection'**
+  String get retryConnection;
+
+  /// No description provided for @retryRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get retryRequest;
+
+  /// No description provided for @tryAgainLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Later'**
+  String get tryAgainLater;
+
+  /// No description provided for @pleaseFixErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fix the following errors:'**
+  String get pleaseFixErrors;
+
+  /// No description provided for @formIsInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Form is Invalid'**
+  String get formIsInvalid;
+
+  /// No description provided for @connectionIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Issue'**
+  String get connectionIssue;
+
+  /// No description provided for @authenticationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Authentication Failed'**
+  String get authenticationFailed;
+
+  /// No description provided for @validationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation Error'**
+  String get validationError;
+
+  /// No description provided for @generalError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get generalError;
 }
 
 class _AppLocalizationsDelegate

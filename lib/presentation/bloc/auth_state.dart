@@ -30,10 +30,14 @@ class AuthUnauthenticated extends AuthState {
 }
 
 class AuthError extends AuthState {
-  final String message;
+  final AppError error;
+  final AuthEvent? lastAction; // Store the last action for retry
 
-  const AuthError({required this.message});
+  const AuthError({required this.error, this.lastAction});
+
+  // Convenience getter for backward compatibility
+  String get message => error.message;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [error, lastAction];
 }

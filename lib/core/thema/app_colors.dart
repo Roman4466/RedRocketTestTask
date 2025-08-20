@@ -24,13 +24,11 @@ class AppColors {
   static const Color textOnPrimary = Color(0xFFFFFFFF);
   static const Color textOnSecondary = Color(0xB3FFFFFF); // 70% opacity white
 
-  // Status Colors
   static const Color error = Color(0xFFD32F2F);
   static const Color success = Color(0xFF388E3C);
   static const Color warning = Color(0xFFF57C00);
   static const Color info = Color(0xFF1976D2);
 
-  // Test Credentials Box Colors
   static const Color testCredentialsBg = Color(0xFFE3F2FD);
   static const Color testCredentialsBorder = Color(0xFF90CAF9);
   static const Color testCredentialsText = Color(0xFF1565C0);

@@ -32,3 +32,7 @@ class AuthStatusChecked extends AuthEvent {
 class AuthUserRequested extends AuthEvent {
   const AuthUserRequested();
 }
+
+class AuthRetryLastAction extends AuthEvent {
+  const AuthRetryLastAction();
+}
