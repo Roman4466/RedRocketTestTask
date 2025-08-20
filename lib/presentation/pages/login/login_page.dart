@@ -34,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.addListener(_validateForm);
     _passwordController.addListener(_validateForm);
 
-    // Add focus listeners to track when fields lose focus
     _emailFocusNode.addListener(() {
       if (!_emailFocusNode.hasFocus && !_emailTouched) {
         setState(() {
@@ -95,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.all(24.w),
             child: Form(
               key: _formKey,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              autovalidateMode: AutovalidateMode.disabled,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -126,6 +125,8 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
                     validator: (value) {
+                      if (!_emailTouched) return null;
+
                       if (value == null || value.isEmpty) {
                         return l10n.emailRequired;
                       }
@@ -134,7 +135,14 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
-                    onChanged: (_) => _validateForm(),
+                    onChanged: (_) {
+                      if (!_emailTouched) {
+                        setState(() {
+                          _emailTouched = true;
+                        });
+                      }
+                      _validateForm();
+                    },
                   ),
                   SizedBox(height: 16.h),
                   TextFormField(
@@ -148,21 +156,32 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: const Icon(Icons.lock_outlined),
                     ),
                     validator: (value) {
+                      if (!_passwordTouched) return null;
+
                       if (value == null || value.isEmpty) {
                         return l10n.passwordRequired;
                       }
-                      if (value.length < 6) {
+                      if (_isValidPassword(value)) {
                         return l10n.passwordMinLength;
                       }
                       return null;
                     },
-                    onChanged: (_) => _validateForm(),
+                    onChanged: (_) {
+                      if (!_passwordTouched) {
+                        setState(() {
+                          _passwordTouched = true;
+                        });
+                      }
+                      _validateForm();
+                    },
                   ),
                   SizedBox(height: 24.h),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
-                      final isButtonEnabled = _isFormValid && !isLoading;
+                      final isEmailValid = _isValidEmail(_emailController.text);
+                      final isPasswordValid = _isValidPassword(_passwordController.text);
+                      final isButtonEnabled = isEmailValid && isPasswordValid && !isLoading;
 
                       return GestureDetector(
                         onTap: isButtonEnabled ? _onLoginPressed : null,
@@ -178,15 +197,15 @@ class _LoginPageState extends State<LoginPage> {
                           child: Center(
                             child: isLoading
                                 ? SizedBox(
-                              height: 20.h,
-                              width: 20.w,
-                              child: const CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  AppColors.textOnPrimary,
-                                ),
-                              ),
-                            )
+                                    height: 20.h,
+                                    width: 20.w,
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        AppColors.textOnPrimary,
+                                      ),
+                                    ),
+                                  )
                                 : Text(l10n.signIn, style: AppTextStyles.buttonLarge),
                           ),
                         ),
@@ -204,6 +223,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginPressed() {
+    setState(() {
+      _emailTouched = true;
+      _passwordTouched = true;
+    });
+
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
@@ -214,6 +238,10 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isValidEmail(String email) {
     return RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
+  }
+
+  bool _isValidPassword(String password) {
+    return password.length >= 6;
   }
 
   @override

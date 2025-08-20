@@ -5,24 +5,26 @@ class MockAuthInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (options.path.contains('/auth/login')) {
       final requestData = options.data as Map<String, dynamic>?;
-      final email = requestData?['email'] ?? 'test@example.com';
+      final email = requestData?['email'] ?? '';
+      final password = requestData?['password'] ?? '';
 
-      if (email == 'invalid@test.com') {
+      if (email == 'test@example.com' && password == 'password123') {
+        final responseData = {
+          'token': 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
+          'refreshToken': 'mock_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
+          'user': {'id': 1, 'email': email, 'name': 'Test User'},
+        };
+
         Future.delayed(const Duration(milliseconds: 800), () {
-          handler.reject(
-            DioException(
+          handler.resolve(Response(
               requestOptions: options,
-              response: Response(
-                requestOptions: options,
-                statusCode: 401,
-                data: {'message': 'Invalid credentials'},
-              ),
-              type: DioExceptionType.badResponse,
-            ),
-          );
+              data: responseData,
+              statusCode: 200
+          ));
         });
         return;
       }
+
       if (email == 'timeout@test.com') {
         Future.delayed(const Duration(milliseconds: 1000), () {
           handler.reject(
@@ -83,14 +85,18 @@ class MockAuthInterceptor extends Interceptor {
         return;
       }
 
-      final responseData = {
-        'token': 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
-        'refreshToken': 'mock_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
-        'user': {'id': 1, 'email': email, 'name': 'Test User'},
-      };
-
       Future.delayed(const Duration(milliseconds: 800), () {
-        handler.resolve(Response(requestOptions: options, data: responseData, statusCode: 200));
+        handler.reject(
+          DioException(
+            requestOptions: options,
+            response: Response(
+              requestOptions: options,
+              statusCode: 401,
+              data: {'message': 'Invalid credentials'},
+            ),
+            type: DioExceptionType.badResponse,
+          ),
+        );
       });
       return;
     }
