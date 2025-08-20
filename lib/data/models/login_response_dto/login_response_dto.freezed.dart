@@ -22,7 +22,9 @@ LoginResponseDto _$LoginResponseDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginResponseDto {
   String get token => throw _privateConstructorUsedError;
+
   String get refreshToken => throw _privateConstructorUsedError;
+
   UserDto get user => throw _privateConstructorUsedError;
 
   /// Serializes this LoginResponseDto to a JSON map.
@@ -31,16 +33,14 @@ mixin _$LoginResponseDto {
   /// Create a copy of LoginResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $LoginResponseDtoCopyWith<LoginResponseDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $LoginResponseDtoCopyWith<LoginResponseDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $LoginResponseDtoCopyWith<$Res> {
-  factory $LoginResponseDtoCopyWith(
-    LoginResponseDto value,
-    $Res Function(LoginResponseDto) then,
-  ) = _$LoginResponseDtoCopyWithImpl<$Res, LoginResponseDto>;
+  factory $LoginResponseDtoCopyWith(LoginResponseDto value, $Res Function(LoginResponseDto) then) =
+      _$LoginResponseDtoCopyWithImpl<$Res, LoginResponseDto>;
+
   @useResult
   $Res call({String token, String refreshToken, UserDto user});
 
@@ -54,6 +54,7 @@ class _$LoginResponseDtoCopyWithImpl<$Res, $Val extends LoginResponseDto>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -61,11 +62,7 @@ class _$LoginResponseDtoCopyWithImpl<$Res, $Val extends LoginResponseDto>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? token = null,
-    Object? refreshToken = null,
-    Object? user = null,
-  }) {
+  $Res call({Object? token = null, Object? refreshToken = null, Object? user = null}) {
     return _then(
       _value.copyWith(
             token: null == token
@@ -97,12 +94,12 @@ class _$LoginResponseDtoCopyWithImpl<$Res, $Val extends LoginResponseDto>
 }
 
 /// @nodoc
-abstract class _$$LoginResponseDtoImplCopyWith<$Res>
-    implements $LoginResponseDtoCopyWith<$Res> {
+abstract class _$$LoginResponseDtoImplCopyWith<$Res> implements $LoginResponseDtoCopyWith<$Res> {
   factory _$$LoginResponseDtoImplCopyWith(
     _$LoginResponseDtoImpl value,
     $Res Function(_$LoginResponseDtoImpl) then,
   ) = __$$LoginResponseDtoImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String token, String refreshToken, UserDto user});
@@ -124,11 +121,7 @@ class __$$LoginResponseDtoImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? token = null,
-    Object? refreshToken = null,
-    Object? user = null,
-  }) {
+  $Res call({Object? token = null, Object? refreshToken = null, Object? user = null}) {
     return _then(
       _$LoginResponseDtoImpl(
         token: null == token
@@ -178,8 +171,7 @@ class _$LoginResponseDtoImpl implements _LoginResponseDto {
         (other.runtimeType == runtimeType &&
             other is _$LoginResponseDtoImpl &&
             (identical(other.token, token) || other.token == token) &&
-            (identical(other.refreshToken, refreshToken) ||
-                other.refreshToken == refreshToken) &&
+            (identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken) &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -193,10 +185,7 @@ class _$LoginResponseDtoImpl implements _LoginResponseDto {
   @override
   @pragma('vm:prefer-inline')
   _$$LoginResponseDtoImplCopyWith<_$LoginResponseDtoImpl> get copyWith =>
-      __$$LoginResponseDtoImplCopyWithImpl<_$LoginResponseDtoImpl>(
-        this,
-        _$identity,
-      );
+      __$$LoginResponseDtoImplCopyWithImpl<_$LoginResponseDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -211,13 +200,14 @@ abstract class _LoginResponseDto implements LoginResponseDto {
     required final UserDto user,
   }) = _$LoginResponseDtoImpl;
 
-  factory _LoginResponseDto.fromJson(Map<String, dynamic> json) =
-      _$LoginResponseDtoImpl.fromJson;
+  factory _LoginResponseDto.fromJson(Map<String, dynamic> json) = _$LoginResponseDtoImpl.fromJson;
 
   @override
   String get token;
+
   @override
   String get refreshToken;
+
   @override
   UserDto get user;
 

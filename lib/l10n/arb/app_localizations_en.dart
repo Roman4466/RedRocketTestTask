@@ -159,16 +159,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorUnknown => 'An unexpected error occurred. Please try again.';
 
   @override
-  String get retry => 'Retry';
-
-  @override
-  String get retryConnection => 'Retry';
-
-  @override
-  String get retryRequest => 'Try Again';
-
-  @override
-  String get tryAgainLater => 'Try Later';
+  String get retry => 'Try Again';
 
   @override
   String get pleaseFixErrors => 'Please fix the following errors:';

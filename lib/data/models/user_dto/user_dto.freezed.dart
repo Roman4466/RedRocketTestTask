@@ -22,7 +22,9 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserDto {
   int get id => throw _privateConstructorUsedError;
+
   String get email => throw _privateConstructorUsedError;
+
   String get name => throw _privateConstructorUsedError;
 
   /// Serializes this UserDto to a JSON map.
@@ -38,17 +40,18 @@ mixin _$UserDto {
 abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
       _$UserDtoCopyWithImpl<$Res, UserDto>;
+
   @useResult
   $Res call({int id, String email, String name});
 }
 
 /// @nodoc
-class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
-    implements $UserDtoCopyWith<$Res> {
+class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto> implements $UserDtoCopyWith<$Res> {
   _$UserDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -79,23 +82,19 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
 
 /// @nodoc
 abstract class _$$UserDtoImplCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
-  factory _$$UserDtoImplCopyWith(
-    _$UserDtoImpl value,
-    $Res Function(_$UserDtoImpl) then,
-  ) = __$$UserDtoImplCopyWithImpl<$Res>;
+  factory _$$UserDtoImplCopyWith(_$UserDtoImpl value, $Res Function(_$UserDtoImpl) then) =
+      __$$UserDtoImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int id, String email, String name});
 }
 
 /// @nodoc
-class __$$UserDtoImplCopyWithImpl<$Res>
-    extends _$UserDtoCopyWithImpl<$Res, _$UserDtoImpl>
+class __$$UserDtoImplCopyWithImpl<$Res> extends _$UserDtoCopyWithImpl<$Res, _$UserDtoImpl>
     implements _$$UserDtoImplCopyWith<$Res> {
-  __$$UserDtoImplCopyWithImpl(
-    _$UserDtoImpl _value,
-    $Res Function(_$UserDtoImpl) _then,
-  ) : super(_value, _then);
+  __$$UserDtoImplCopyWithImpl(_$UserDtoImpl _value, $Res Function(_$UserDtoImpl) _then)
+    : super(_value, _then);
 
   /// Create a copy of UserDto
   /// with the given fields replaced by the non-null parameter values.
@@ -124,14 +123,9 @@ class __$$UserDtoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserDtoImpl implements _UserDto {
-  const _$UserDtoImpl({
-    required this.id,
-    required this.email,
-    required this.name,
-  });
+  const _$UserDtoImpl({required this.id, required this.email, required this.name});
 
-  factory _$UserDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$UserDtoImplFromJson(json);
+  factory _$UserDtoImpl.fromJson(Map<String, dynamic> json) => _$$UserDtoImplFromJson(json);
 
   @override
   final int id;
@@ -184,8 +178,10 @@ abstract class _UserDto implements UserDto {
 
   @override
   int get id;
+
   @override
   String get email;
+
   @override
   String get name;
 
@@ -193,6 +189,5 @@ abstract class _UserDto implements UserDto {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$UserDtoImplCopyWith<_$UserDtoImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$UserDtoImplCopyWith<_$UserDtoImpl> get copyWith => throw _privateConstructorUsedError;
 }

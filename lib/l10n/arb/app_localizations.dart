@@ -367,26 +367,8 @@ abstract class AppLocalizations {
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:
-  /// **'Retry'**
-  String get retry;
-
-  /// No description provided for @retryConnection.
-  ///
-  /// In en, this message translates to:
-  /// **'Check Connection'**
-  String get retryConnection;
-
-  /// No description provided for @retryRequest.
-  ///
-  /// In en, this message translates to:
   /// **'Try Again'**
-  String get retryRequest;
-
-  /// No description provided for @tryAgainLater.
-  ///
-  /// In en, this message translates to:
-  /// **'Try Later'**
-  String get tryAgainLater;
+  String get retry;
 
   /// No description provided for @pleaseFixErrors.
   ///

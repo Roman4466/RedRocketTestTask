@@ -5,11 +5,8 @@ part 'login_request_dto.g.dart';
 
 @freezed
 class LoginRequestDto with _$LoginRequestDto {
-  const factory LoginRequestDto({
-    required String email,
-    required String password,
-  }) = _LoginRequestDto;
+  const factory LoginRequestDto({required String email, required String password}) =
+      _LoginRequestDto;
 
-  factory LoginRequestDto.fromJson(Map<String, dynamic> json) =>
-      _$LoginRequestDtoFromJson(json);
+  factory LoginRequestDto.fromJson(Map<String, dynamic> json) => _$LoginRequestDtoFromJson(json);
 }

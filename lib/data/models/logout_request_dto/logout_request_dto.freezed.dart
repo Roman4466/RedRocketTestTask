@@ -29,16 +29,14 @@ mixin _$LogoutRequestDto {
   /// Create a copy of LogoutRequestDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $LogoutRequestDtoCopyWith<LogoutRequestDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $LogoutRequestDtoCopyWith<LogoutRequestDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $LogoutRequestDtoCopyWith<$Res> {
-  factory $LogoutRequestDtoCopyWith(
-    LogoutRequestDto value,
-    $Res Function(LogoutRequestDto) then,
-  ) = _$LogoutRequestDtoCopyWithImpl<$Res, LogoutRequestDto>;
+  factory $LogoutRequestDtoCopyWith(LogoutRequestDto value, $Res Function(LogoutRequestDto) then) =
+      _$LogoutRequestDtoCopyWithImpl<$Res, LogoutRequestDto>;
+
   @useResult
   $Res call({String token});
 }
@@ -50,6 +48,7 @@ class _$LogoutRequestDtoCopyWithImpl<$Res, $Val extends LogoutRequestDto>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -71,12 +70,12 @@ class _$LogoutRequestDtoCopyWithImpl<$Res, $Val extends LogoutRequestDto>
 }
 
 /// @nodoc
-abstract class _$$LogoutRequestDtoImplCopyWith<$Res>
-    implements $LogoutRequestDtoCopyWith<$Res> {
+abstract class _$$LogoutRequestDtoImplCopyWith<$Res> implements $LogoutRequestDtoCopyWith<$Res> {
   factory _$$LogoutRequestDtoImplCopyWith(
     _$LogoutRequestDtoImpl value,
     $Res Function(_$LogoutRequestDtoImpl) then,
   ) = __$$LogoutRequestDtoImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String token});
@@ -141,10 +140,7 @@ class _$LogoutRequestDtoImpl implements _LogoutRequestDto {
   @override
   @pragma('vm:prefer-inline')
   _$$LogoutRequestDtoImplCopyWith<_$LogoutRequestDtoImpl> get copyWith =>
-      __$$LogoutRequestDtoImplCopyWithImpl<_$LogoutRequestDtoImpl>(
-        this,
-        _$identity,
-      );
+      __$$LogoutRequestDtoImplCopyWithImpl<_$LogoutRequestDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -153,11 +149,9 @@ class _$LogoutRequestDtoImpl implements _LogoutRequestDto {
 }
 
 abstract class _LogoutRequestDto implements LogoutRequestDto {
-  const factory _LogoutRequestDto({required final String token}) =
-      _$LogoutRequestDtoImpl;
+  const factory _LogoutRequestDto({required final String token}) = _$LogoutRequestDtoImpl;
 
-  factory _LogoutRequestDto.fromJson(Map<String, dynamic> json) =
-      _$LogoutRequestDtoImpl.fromJson;
+  factory _LogoutRequestDto.fromJson(Map<String, dynamic> json) = _$LogoutRequestDtoImpl.fromJson;
 
   @override
   String get token;

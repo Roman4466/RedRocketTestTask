@@ -87,21 +87,11 @@ class MockAuthInterceptor extends Interceptor {
       final responseData = {
         'token': 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
         'refreshToken': 'mock_refresh_token_${DateTime.now().millisecondsSinceEpoch}',
-        'user': {
-          'id': 1,
-          'email': email,
-          'name': 'Test User',
-        }
+        'user': {'id': 1, 'email': email, 'name': 'Test User'},
       };
 
       Future.delayed(const Duration(milliseconds: 800), () {
-        handler.resolve(
-          Response(
-            requestOptions: options,
-            data: responseData,
-            statusCode: 200,
-          ),
-        );
+        handler.resolve(Response(requestOptions: options, data: responseData, statusCode: 200));
       });
       return;
     }

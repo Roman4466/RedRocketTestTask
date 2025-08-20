@@ -1,7 +1,7 @@
-
 // lib/core/theme/app_theme.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'app_colors.dart';
 import 'app_text_styles.dart';
 
@@ -24,9 +24,7 @@ class AppTheme {
         elevation: 0,
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.textOnPrimary,
-        titleTextStyle: AppTextStyles.h6.copyWith(
-          color: AppColors.textOnPrimary,
-        ),
+        titleTextStyle: AppTextStyles.h6.copyWith(color: AppColors.textOnPrimary),
       ),
 
       // Elevated Button Theme
@@ -36,9 +34,7 @@ class AppTheme {
           foregroundColor: AppColors.textOnPrimary,
           elevation: 2,
           padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 24.w),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
           textStyle: AppTextStyles.buttonLarge,
         ),
       ),
@@ -49,12 +45,8 @@ class AppTheme {
           foregroundColor: AppColors.error,
           side: const BorderSide(color: AppColors.error),
           padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 24.w),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-          textStyle: AppTextStyles.buttonMedium.copyWith(
-            color: AppColors.error,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+          textStyle: AppTextStyles.buttonMedium.copyWith(color: AppColors.error),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -100,10 +92,7 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     return lightTheme.copyWith(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        brightness: Brightness.dark,
-      ),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary, brightness: Brightness.dark),
       scaffoldBackgroundColor: const Color(0xFF121212),
     );
   }

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'di/injection_module.dart';
+import 'l10n/arb/app_localizations.dart';
 import 'presentation/bloc/auth_bloc.dart';
 import 'router.dart';
-import 'l10n/arb/app_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -27,16 +27,11 @@ class App extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.deepPurple,
               visualDensity: VisualDensity.adaptivePlatformDensity,
-              appBarTheme: const AppBarTheme(
-                centerTitle: true,
-                elevation: 0,
-              ),
+              appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
                   elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
               ),
             ),

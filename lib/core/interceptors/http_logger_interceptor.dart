@@ -18,22 +18,22 @@ class HttpLoggerInterceptor extends Interceptor {
   final bool _printResponseHeaders = true;
   final bool _printResponseBody = true;
 
-  HttpLoggerInterceptor({
-    @factoryParam LoggerAbstract? logger,
-  }) : _logger = logger ??
-      LoggerImpl(
-        logger: Logger(
-          printer: PrettyPrinter(
-            printTime: false,
-            colors: false,
-            printEmojis: true,
-            methodCount: 2,
-            errorMethodCount: 8,
-            lineLength: 150,
-            noBoxingByDefault: false,
-          ),
-        ),
-      );
+  HttpLoggerInterceptor({@factoryParam LoggerAbstract? logger})
+    : _logger =
+          logger ??
+          LoggerImpl(
+            logger: Logger(
+              printer: PrettyPrinter(
+                printTime: false,
+                colors: false,
+                printEmojis: true,
+                methodCount: 2,
+                errorMethodCount: 8,
+                lineLength: 150,
+                noBoxingByDefault: false,
+              ),
+            ),
+          );
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -83,7 +83,7 @@ class HttpLoggerInterceptor extends Interceptor {
     if (_printRequest) {
       requestLog = 'REQUEST:\n\n';
       requestLog +=
-      '${requestOptions?.method ?? ''} ${requestOptions?.baseUrl ?? ''}${requestOptions?.path ?? ''}\n';
+          '${requestOptions?.method ?? ''} ${requestOptions?.baseUrl ?? ''}${requestOptions?.path ?? ''}\n';
 
       if (_printRequestHeaders) {
         for (final header in (requestOptions?.headers ?? {}).entries) {
@@ -99,7 +99,8 @@ class HttpLoggerInterceptor extends Interceptor {
     }
 
     if (_printResponse && response != null) {
-      responseLog = 'RESPONSE [${response.statusCode}/${response.statusMessage}]: '
+      responseLog =
+          'RESPONSE [${response.statusCode}/${response.statusMessage}]: '
           '${requestOptions?.extra['start_time'] != null ? '[Time elapsed: ${DateTime.now().millisecondsSinceEpoch - requestOptions?.extra['start_time']} ms]' : ''}'
           '\n\n';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../l10n/l10n.dart';
 import 'app_error.dart';
 import 'error_codes.dart';
@@ -56,14 +57,6 @@ class ErrorLocalizer {
     final l10n = context.l10n;
 
     switch (error.code) {
-      case AppErrorCode.noConnection:
-      case AppErrorCode.connectionTimeout:
-        return l10n.retryConnection;
-      case AppErrorCode.serverError:
-      case AppErrorCode.serverTimeout:
-        return l10n.retryRequest;
-      case AppErrorCode.rateLimitExceeded:
-        return l10n.tryAgainLater;
       default:
         return l10n.retry;
     }

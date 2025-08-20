@@ -52,14 +52,9 @@
   "errorStorageError": "Failed to save data locally. Please try again.",
   "errorTokenSaveError": "Failed to save authentication data. Please try logging in again.",
   "errorUnknown": "An unexpected error occurred. Please try again.",
-
-  "retry": "Retry",
-  "retryConnection": "Check Connection",
-  "retryRequest": "Try Again",
-  "tryAgainLater": "Try Later",
+  "retry": "Try Again",
   "pleaseFixErrors": "Please fix the following errors:",
   "formIsInvalid": "Form is Invalid",
-
   "connectionIssue": "Connection Issue",
   "authenticationFailed": "Authentication Failed",
   "validationError": "Validation Error",

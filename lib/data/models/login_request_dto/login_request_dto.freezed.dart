@@ -22,6 +22,7 @@ LoginRequestDto _$LoginRequestDtoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LoginRequestDto {
   String get email => throw _privateConstructorUsedError;
+
   String get password => throw _privateConstructorUsedError;
 
   /// Serializes this LoginRequestDto to a JSON map.
@@ -30,16 +31,14 @@ mixin _$LoginRequestDto {
   /// Create a copy of LoginRequestDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $LoginRequestDtoCopyWith<LoginRequestDto> get copyWith =>
-      throw _privateConstructorUsedError;
+  $LoginRequestDtoCopyWith<LoginRequestDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $LoginRequestDtoCopyWith<$Res> {
-  factory $LoginRequestDtoCopyWith(
-    LoginRequestDto value,
-    $Res Function(LoginRequestDto) then,
-  ) = _$LoginRequestDtoCopyWithImpl<$Res, LoginRequestDto>;
+  factory $LoginRequestDtoCopyWith(LoginRequestDto value, $Res Function(LoginRequestDto) then) =
+      _$LoginRequestDtoCopyWithImpl<$Res, LoginRequestDto>;
+
   @useResult
   $Res call({String email, String password});
 }
@@ -51,6 +50,7 @@ class _$LoginRequestDtoCopyWithImpl<$Res, $Val extends LoginRequestDto>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -76,12 +76,12 @@ class _$LoginRequestDtoCopyWithImpl<$Res, $Val extends LoginRequestDto>
 }
 
 /// @nodoc
-abstract class _$$LoginRequestDtoImplCopyWith<$Res>
-    implements $LoginRequestDtoCopyWith<$Res> {
+abstract class _$$LoginRequestDtoImplCopyWith<$Res> implements $LoginRequestDtoCopyWith<$Res> {
   factory _$$LoginRequestDtoImplCopyWith(
     _$LoginRequestDtoImpl value,
     $Res Function(_$LoginRequestDtoImpl) then,
   ) = __$$LoginRequestDtoImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({String email, String password});
@@ -140,8 +140,7 @@ class _$LoginRequestDtoImpl implements _LoginRequestDto {
         (other.runtimeType == runtimeType &&
             other is _$LoginRequestDtoImpl &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password));
+            (identical(other.password, password) || other.password == password));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -154,10 +153,7 @@ class _$LoginRequestDtoImpl implements _LoginRequestDto {
   @override
   @pragma('vm:prefer-inline')
   _$$LoginRequestDtoImplCopyWith<_$LoginRequestDtoImpl> get copyWith =>
-      __$$LoginRequestDtoImplCopyWithImpl<_$LoginRequestDtoImpl>(
-        this,
-        _$identity,
-      );
+      __$$LoginRequestDtoImplCopyWithImpl<_$LoginRequestDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -166,16 +162,14 @@ class _$LoginRequestDtoImpl implements _LoginRequestDto {
 }
 
 abstract class _LoginRequestDto implements LoginRequestDto {
-  const factory _LoginRequestDto({
-    required final String email,
-    required final String password,
-  }) = _$LoginRequestDtoImpl;
+  const factory _LoginRequestDto({required final String email, required final String password}) =
+      _$LoginRequestDtoImpl;
 
-  factory _LoginRequestDto.fromJson(Map<String, dynamic> json) =
-      _$LoginRequestDtoImpl.fromJson;
+  factory _LoginRequestDto.fromJson(Map<String, dynamic> json) = _$LoginRequestDtoImpl.fromJson;
 
   @override
   String get email;
+
   @override
   String get password;
 
