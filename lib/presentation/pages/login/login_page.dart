@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
     _emailController.addListener(_validateForm);
     _passwordController.addListener(_validateForm);
 
+    // Add focus listeners to track when fields lose focus
     _emailFocusNode.addListener(() {
       if (!_emailFocusNode.hasFocus && !_emailTouched) {
         setState(() {
@@ -94,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.all(24.w),
             child: Form(
               key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: l10n.email,
                       prefixIcon: const Icon(Icons.email_outlined),
                     ),
-                    validator: _emailTouched ? (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return l10n.emailRequired;
                       }
@@ -131,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                         return l10n.invalidEmailFormat;
                       }
                       return null;
-                    } : null,
+                    },
                     onChanged: (_) => _validateForm(),
                   ),
                   SizedBox(height: 16.h),
@@ -145,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       labelText: l10n.password,
                       prefixIcon: const Icon(Icons.lock_outlined),
                     ),
-                    validator: _passwordTouched ? (value) {
+                    validator: (value) {
                       if (value == null || value.isEmpty) {
                         return l10n.passwordRequired;
                       }
@@ -153,31 +155,24 @@ class _LoginPageState extends State<LoginPage> {
                         return l10n.passwordMinLength;
                       }
                       return null;
-                    } : null,
+                    },
                     onChanged: (_) => _validateForm(),
                   ),
                   SizedBox(height: 24.h),
                   BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       final isLoading = state is AuthLoading;
+                      final isButtonEnabled = _isFormValid && !isLoading;
 
                       return GestureDetector(
-                        onTap: () {
-                          if (!isLoading) {
-                            if (_isFormValid) {
-                              _onLoginPressed();
-                            } else {
-                              _showFormErrors(context, l10n);
-                            }
-                          }
-                        },
+                        onTap: isButtonEnabled ? _onLoginPressed : null,
                         child: Container(
                           width: double.infinity,
                           padding: EdgeInsets.symmetric(vertical: 16.h),
                           decoration: BoxDecoration(
-                            color: isLoading || !_isFormValid
-                                ? AppColors.primary.withValues(alpha: 0.6)
-                                : AppColors.primary,
+                            color: isButtonEnabled
+                                ? AppColors.primary
+                                : AppColors.primary.withValues(alpha: 0.6),
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Center(
@@ -209,35 +204,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginPressed() {
-    setState(() {
-      _emailTouched = true;
-      _passwordTouched = true;
-    });
-
     if (_formKey.currentState!.validate()) {
       final email = _emailController.text.trim();
       final password = _passwordController.text;
 
       context.read<AuthBloc>().add(AuthLoginRequested(email: email, password: password));
     }
-  }
-
-  void _showFormErrors(BuildContext context, dynamic l10n) {
-    setState(() {
-      _emailTouched = true;
-      _passwordTouched = true;
-    });
-
-    _formKey.currentState!.validate();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(l10n.pleaseFixErrors),
-        backgroundColor: AppColors.error,
-        duration: const Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
   }
 
   bool _isValidEmail(String email) {
