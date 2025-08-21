@@ -33,8 +33,7 @@ Built as a technical demonstration for Red Rocket's Flutter developer assessment
    fvm flutter pub get
    ```
    
-4. **ENV**
-   Put `.env` into root directory
+4. Put `.env` into root directory
 
 5. **Generate code**
    ```bash
