@@ -33,20 +33,20 @@ Built as a technical demonstration for Red Rocket's Flutter developer assessment
    fvm flutter pub get
    ```
    
-4**ENV**
+4. **ENV**
    Put `.env` into root directory
 
-4. **Generate code**
+5. **Generate code**
    ```bash
    fvm dart run build_runner watch --delete-conflicting-outputs
    ```
 
-5. **Generate localizations**
+6. **Generate localizations**
    ```bash
    fvm flutter gen-l10n
    ```
 
-6. **Run the app**
+7 **Run the app**
    ```bash
    fvm flutter run
    ```
